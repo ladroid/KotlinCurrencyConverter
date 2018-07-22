@@ -20,10 +20,10 @@ Now when you registered there and got API_KEY you got a json link where you have
  
  ```kotlin
  interface CurrencyAPI {
-    @GET("latest?access_key=777f19cddfb2d3523372aa02ba171ebb&format=1/")
+    @GET("latest?access_key=API_KEY&format=1/")
     fun json() : Call<JsonElement>
 
-    @GET("latest?access_key=777f19cddfb2d3523372aa02ba171ebb&symbols=")
+    @GET("latest?access_key=API_KEY&symbols=")
     fun getCurrenciess(@Query("symbols") date: String) : Call<JsonElement>
 }
 ```
