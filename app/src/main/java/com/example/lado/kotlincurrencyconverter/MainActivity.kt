@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_dashboard -> {
                 WorkWithJson().json()
+                startActivity(Intent(this@MainActivity, GraphicCurrencyActivity::class.java))
                 //message.setText(R.string.title_dashboard)
                 return@OnNavigationItemSelectedListener true
             }

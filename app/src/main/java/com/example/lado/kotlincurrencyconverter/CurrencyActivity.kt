@@ -30,7 +30,8 @@ open class CurrencyActivity : AppCompatActivity() {
     var number1: Double ?= null
     var number2: Double ?= null
 
-    var currencyList = arrayOf("AED",
+    var currencyList = arrayOf(
+    "AED",
     "AFN",
     "ALL",
     "AMD",
@@ -145,7 +146,7 @@ open class CurrencyActivity : AppCompatActivity() {
             textView_msg = findViewById(R.id.LALALALA)
             textView_msg?.text = "${currencyList[position]}"
 
-            Log.e("AZAZA", textView_msg?.text.toString())
+            Log.e("RATE", textView_msg?.text.toString())
             jsonByRate1(textView_msg?.text.toString())
         }
 
@@ -173,7 +174,7 @@ open class CurrencyActivity : AppCompatActivity() {
 
         val messageAPI = retrofit.create(CurrencyAPI::class.java)
 
-        Log.e("AZAZA!!!", textView_msg?.text.toString())
+        Log.e("RATE!!!", textView_msg?.text.toString())
 
         val calling: Call<JsonElement> = messageAPI.getCurrenciess(textView_msg?.text.toString())
         calling.enqueue(object : Callback<JsonElement> {
@@ -191,7 +192,7 @@ open class CurrencyActivity : AppCompatActivity() {
                         var stringBuilder: StringBuilder = StringBuilder(jsonElement.toString())
                         var json: JsonObject = parser.parse(stringBuilder) as JsonObject
                         var json1: JsonObject? = json.obj("rates")
-                        Log.e("ALALALALA", "AGE12: ${json1?.double("${textView_msg?.text.toString()}")}" )
+                        Log.e("CURRENCY", "CURRENCY: ${json1?.double("${textView_msg?.text.toString()}")}" )
 
                         number1 = json1?.double("${textView_msg?.text.toString()}")
 
@@ -217,7 +218,7 @@ open class CurrencyActivity : AppCompatActivity() {
 
         val messageAPI = retrofit.create(CurrencyAPI::class.java)
 
-        Log.e("AZAZA!!!", textView?.text.toString())
+        Log.e("RATE!!!", textView?.text.toString())
 
         val calling: Call<JsonElement> = messageAPI.getCurrenciess(textView?.text.toString())
         calling.enqueue(object : Callback<JsonElement> {
@@ -238,7 +239,7 @@ open class CurrencyActivity : AppCompatActivity() {
                         var json: JsonObject = parser.parse(stringBuilder) as JsonObject
                         Log.e("SASA", "Age : ${json.string("date")}")
                         var json1: JsonObject? = json.obj("rates")
-                        Log.e("ALALALALA", "AGE12: ${json1?.double("${textView?.text.toString()}")}" )
+                        Log.e("CURRENCY2", "CURRENCY: ${json1?.double("${textView?.text.toString()}")}" )
 
                         number2 = json1?.double("${textView?.text.toString()}")
 
