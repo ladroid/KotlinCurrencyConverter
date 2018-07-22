@@ -9,6 +9,7 @@ import android.widget.*
 import org.w3c.dom.Text
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import com.beust.klaxon.Parser
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import retrofit2.Call
@@ -16,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import com.beust.klaxon.JsonObject
 
 open class CurrencyActivity : AppCompatActivity() {
 
@@ -26,7 +27,97 @@ open class CurrencyActivity : AppCompatActivity() {
     open var editText1: EditText ?= null
     open var editText2: EditText ?= null
 
-    var currencyList = arrayOf("AUD","CAD","CHF","EUR","GBP","JPY","NZD","KHR","USD","CNY","THB","INR")
+    var number1: Double ?= null
+    var number2: Double ?= null
+
+    var currencyList = arrayOf("AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "ANG",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BGN",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BSD",
+    "BTC",
+    "BTN",
+    "BWP",
+    "BYN",
+    "BYR",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHF",
+    "CLF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CUC",
+    "CUP",
+    "CVE",
+    "CZK",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GGP",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HTG",
+    "HUF",
+    "IDR",
+    "ILS",
+    "IMP",
+    "INR",
+    "IQD",
+    "IRR",
+    "ISK",
+    "JEP",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +138,6 @@ open class CurrencyActivity : AppCompatActivity() {
         spTo.onItemSelectedListener = onItemSelectedListener1
         val ato: ArrayAdapter<String> = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, currencyList)
         spTo.adapter = ato
-
     }
 
     var onItemSelectedListener0: OnItemSelectedListener = object : OnItemSelectedListener {
@@ -95,9 +185,19 @@ open class CurrencyActivity : AppCompatActivity() {
                 if(response != null) {
                     if (response.isSuccessful) {
                         val jsonElement: JsonElement? = response?.body()
-                        //val enums = Gson().fromJson(jsonElement, Array<GetCurrency>::class.java)
+
+                        //parsing JsonElement and getting currency value
+                        var parser: Parser = Parser()
+                        var stringBuilder: StringBuilder = StringBuilder(jsonElement.toString())
+                        var json: JsonObject = parser.parse(stringBuilder) as JsonObject
+                        var json1: JsonObject? = json.obj("rates")
+                        Log.e("ALALALALA", "AGE12: ${json1?.double("${textView_msg?.text.toString()}")}" )
+
+                        number1 = json1?.double("${textView_msg?.text.toString()}")
+
                         Log.e("JSON", jsonElement.toString())
-                        editText1?.text = Editable.Factory.getInstance().newEditable(jsonElement.toString())
+                        editText1?.text = Editable.Factory.getInstance().newEditable(
+                                json1?.double("${textView_msg?.text.toString()}").toString())
                     }
                     else {
                         Log.d("CODE1", "CODE IS $response.code()");
@@ -131,7 +231,20 @@ open class CurrencyActivity : AppCompatActivity() {
                         val jsonElement: JsonElement? = response?.body()
                         //val enums = Gson().fromJson(jsonElement, Array<GetCurrency>::class.java)
                         Log.e("JSON", jsonElement.toString())
-                        editText2?.text = Editable.Factory.getInstance().newEditable(jsonElement.toString())
+
+                        //parsing JsonElement and getting currency value
+                        var parser: Parser = Parser()
+                        var stringBuilder: StringBuilder = StringBuilder(jsonElement.toString())
+                        var json: JsonObject = parser.parse(stringBuilder) as JsonObject
+                        Log.e("SASA", "Age : ${json.string("date")}")
+                        var json1: JsonObject? = json.obj("rates")
+                        Log.e("ALALALALA", "AGE12: ${json1?.double("${textView?.text.toString()}")}" )
+
+                        number2 = json1?.double("${textView?.text.toString()}")
+
+                        Log.e("JSON", jsonElement.toString())
+                        editText2?.text = Editable.Factory.getInstance().newEditable(
+                                json1?.double("${textView?.text.toString()}").toString())
                     }
                     else {
                         Log.d("CODE1", "CODE IS $response.code()");
