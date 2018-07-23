@@ -5,9 +5,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface CurrencyAPI {
-    @GET("latest?access_key=777f19cddfb2d3523372aa02ba171ebb&format=1/")
+    @GET("latest?access_key=YOUR_API_KEY&format=1/")
     fun json() : Call<JsonElement>
 
-    @GET("latest?access_key=777f19cddfb2d3523372aa02ba171ebb&symbols=")
+    @GET("latest?access_key=YOUR_API_KEY&symbols=")
     fun getCurrenciess(@Query("symbols") date: String) : Call<JsonElement>
 }
