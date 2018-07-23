@@ -34,7 +34,101 @@ Now when you registered there and got API_KEY you got a json link where you have
 data class GetCurrency(@SerializedName("rates") val Rates: String)
 ```
 
-3) Add spinner for choosing currency
+3) Make an array of currencies
+
+```kotlin
+var currencyList = arrayOf(
+    "AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "ANG",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BGN",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BSD",
+    "BTC",
+    "BTN",
+    "BWP",
+    "BYN",
+    "BYR",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHF",
+    "CLF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CUC",
+    "CUP",
+    "CVE",
+    "CZK",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GGP",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HTG",
+    "HUF",
+    "IDR",
+    "ILS",
+    "IMP",
+    "INR",
+    "IQD",
+    "IRR",
+    "ISK",
+    "JEP",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL")
+```
+
+4) Add spinner for choosing currency
 
 ```kotlin
 fun setUpSpinnerData() {
@@ -75,7 +169,7 @@ fun setUpSpinnerData() {
     }
 ```
 
-4) We should handle all datas
+5) We should handle all datas
 
 ```kotlin
 fun jsonByRate1(Rate: String) {
@@ -118,7 +212,38 @@ fun jsonByRate1(Rate: String) {
     }
 ```
 
-5) And the last it's my feature. Drawing a graphic
+As you can see I have this part of code for parsing JSON. For this I used [Klaxon library](https://github.com/cbeust/klaxon)
+
+```kotlin
+//parsing JsonElement and getting currency value
+var parser: Parser = Parser()
+var stringBuilder: StringBuilder = StringBuilder(jsonElement.toString())
+var json: JsonObject = parser.parse(stringBuilder) as JsonObject
+var json1: JsonObject? = json.obj("rates")
+```
+
+6) Make a converting
+
+```kotlin
+fun counting() {
+        editText2 = findViewById(R.id.enterToCurrency)
+
+        textViewResult = findViewById(R.id.result)
+
+        var result: Double
+        val one = 1.0
+        numberInput = java.lang.Double.parseDouble(editText2?.text.toString())
+
+        Log.e("INPUT", numberInput.toString())
+        Log.e("NUMBER1", number1.toString())
+        Log.e("NUMBER2", number2.toString())
+        result = numberInput!! * ((one / this!!.number1!!) * this!!.number2!!)
+        Log.e("RESULT", result.toString())
+        textViewResult?.text = result.toString()
+    }
+```
+
+7) And the last it's my feature. Drawing a graphic
 
 ```kotlin
 fun Draw() {
@@ -220,6 +345,8 @@ fun Draw() {
         })
     }
 ```
+
+For this part I used [AnyChart library](https://github.com/AnyChart/AnyChart-Android)
 
 **Soon I will make it better(drawing a graphic)**
 
