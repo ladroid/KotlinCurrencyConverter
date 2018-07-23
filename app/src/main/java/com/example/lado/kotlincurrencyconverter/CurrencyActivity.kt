@@ -22,11 +22,15 @@ import com.beust.klaxon.JsonObject
 open class CurrencyActivity : AppCompatActivity() {
 
     val URL_LINK: String = "http://data.fixer.io/api/"
-    open var textView_msg: TextView ?= null
-    open var textView: TextView ?= null
-    open var editText1: EditText ?= null
-    open var editText2: EditText ?= null
 
+    open var textView_msg: TextView ?= null
+    var textView: TextView ?= null
+    var editText1: EditText ?= null
+    var editText2: EditText ?= null
+    var button: Button ?= null
+    var textViewResult: TextView ?= null
+
+    var numberInput: Double ?= null
     var number1: Double ?= null
     var number2: Double ?= null
 
@@ -124,11 +128,20 @@ open class CurrencyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.currency_activty)
         setUpSpinnerData()
+
+        button = findViewById(R.id.count) as Button
+
+        button?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                counting()
+            }
+
+        })
     }
 
     //This method will be invoked to setup data of the spinner views
     //to show lists of currency types for selection
-    open fun setUpSpinnerData() {
+    fun setUpSpinnerData() {
 
         val spFrom: Spinner = findViewById(R.id.fromCurrency)
         spFrom.onItemSelectedListener = onItemSelectedListener0
@@ -210,7 +223,7 @@ open class CurrencyActivity : AppCompatActivity() {
     }
 
     fun jsonByRate2(Rate: String) {
-        editText2 = findViewById(R.id.enterToCurrency)
+        //editText2 = findViewById(R.id.enterToCurrency)
         val retrofit = Retrofit.Builder()
                 .baseUrl(URL_LINK)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -244,8 +257,8 @@ open class CurrencyActivity : AppCompatActivity() {
                         number2 = json1?.double("${textView?.text.toString()}")
 
                         Log.e("JSON", jsonElement.toString())
-                        editText2?.text = Editable.Factory.getInstance().newEditable(
-                                json1?.double("${textView?.text.toString()}").toString())
+                        //editText2?.text = Editable.Factory.getInstance().newEditable(
+                                //json1?.double("${textView?.text.toString()}").toString())
                     }
                     else {
                         Log.d("CODE1", "CODE IS $response.code()");
@@ -256,22 +269,20 @@ open class CurrencyActivity : AppCompatActivity() {
         })
     }
 
-//    class ItemSelectedFrom: CurrencyActivity(), AdapterView.OnItemSelectedListener {
-//        override fun onNothingSelected(p0: AdapterView<*>?) {}
-//
-//        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//            textView_msg = findViewById(R.id.LALALALA)
-//            Log.e("KUKU", currencyList[position])
-//            textView_msg?.text = "${currencyList[position]}"
-//        }
-//    }
-//
-//    class ItemSelectedTo : CurrencyActivity(), AdapterView.OnItemSelectedListener {
-//        override fun onNothingSelected(p0: AdapterView<*>?) {}
-//
-//        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//            textView = findViewById(R.id.NANANANA)
-//            textView?.text = "${currencyList[position]}"
-//        }
-//    }
+    fun counting() {
+        editText2 = findViewById(R.id.enterToCurrency)
+
+        textViewResult = findViewById(R.id.result)
+
+        var result: Double
+        val one = 1.0
+        numberInput = java.lang.Double.parseDouble(editText2?.text.toString())
+
+        Log.e("INPUT", numberInput.toString())
+        Log.e("NUMBER1", number1.toString())
+        Log.e("NUMBER2", number2.toString())
+        result = numberInput!! * ((one / this!!.number1!!) * this!!.number2!!)
+        Log.e("KUSOK", result.toString())
+        textViewResult?.text = result.toString()
+    }
 }
