@@ -243,6 +243,8 @@ fun counting() {
     }
 ```
 
+This is the formula for converting one currency into another one ![Formula](https://github.com/ladroid/KotlinCurrencyConverter/blob/master/Currency.png)
+
 7) And the last it's my feature. Drawing a graphic
 
 ```kotlin
