@@ -1,5 +1,6 @@
 package com.example.lado.kotlincurrencyconverter
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -18,6 +19,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.beust.klaxon.JsonObject
+import dmax.dialog.SpotsDialog
 
 open class CurrencyActivity : AppCompatActivity() {
 

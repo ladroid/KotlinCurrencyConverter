@@ -1,5 +1,6 @@
 package com.example.lado.kotlincurrencyconverter
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -30,15 +31,33 @@ import com.anychart.anychart.MarkerType
 import com.anychart.anychart.AnyChart.line
 import com.anychart.anychart.CartesianSeriesLine
 import com.anychart.anychart.Set
+import dmax.dialog.SpotsDialog
 
 
 class GraphicCurrencyActivity : AppCompatActivity() {
     val URL_LINK: String = "http://data.fixer.io/api/"
+    var dialog: AlertDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.graphiccurrency_activity)
-        Draw()
+        Start()
+        if(Start()) {
+            dialog = SpotsDialog.Builder().setContext(this@GraphicCurrencyActivity).build().apply { dismiss() }
+            Draw()
+        }
+    }
+
+    fun Start(): Boolean {
+        dialog = SpotsDialog.Builder()
+                .setContext(this@GraphicCurrencyActivity)
+                .setMessage("Loading")
+                .setCancelable(true)
+                .build()
+                .apply {
+                    show()
+                }
+        return true
     }
 
     fun Draw() {
